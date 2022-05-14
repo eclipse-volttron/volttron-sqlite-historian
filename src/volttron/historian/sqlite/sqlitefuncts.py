@@ -49,11 +49,13 @@ from collections import defaultdict
 from datetime import datetime
 from math import ceil
 
-from volttron import utils
-from volttron.utils import jsonapi
-from volttron.utils import fix_sqlite3_datetime
+from volttron.utils import (
+    fix_sqlite3_datetime, jsonapi, setup_logging, format_timestamp
+)
 
-utils.setup_logging()
+from volttron.utils import ClientContext as cc
+
+setup_logging()
 _log = logging.getLogger(__name__)
 
 # Make sure sqlite3 datetime adapters are updated.
@@ -83,7 +85,7 @@ class SqlLiteFuncts(DbDriver):
             # before the historian.
             try:
                 if db_dir == '':
-                    if utils.is_secure_mode():
+                    if cc.is_secure_mode():
                         data_dir = os.path.basename(os.getcwd()) + ".agent-data"
                         db_dir = os.path.join(os.getcwd(), data_dir)
                     else:
@@ -265,11 +267,11 @@ class SqlLiteFuncts(DbDriver):
             if cursor:
                 if value_col == 'agg_value':
                     for _id, ts, value in cursor:
-                        values[id_name_map[topic_id]].append((utils.format_timestamp(ts), value))
+                        values[id_name_map[topic_id]].append((format_timestamp(ts), value))
                     cursor.close()
                 else:
                     for _id, ts, value in cursor:
-                        values[id_name_map[topic_id]].append((utils.format_timestamp(ts), jsonapi.loads(value)))
+                        values[id_name_map[topic_id]].append((format_timestamp(ts), jsonapi.loads(value)))
                     cursor.close()
 
         _log.debug("Time taken to load results from db:{}".format(datetime.utcnow()-start_t))
