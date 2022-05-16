@@ -45,7 +45,7 @@ column_limit = 99
 split_before_logical_operator = true
 
 [tool.poetry.scripts]
-volttron-sqlite-historian = "volttron.historian.sqlite.agent:main"
+volttron-sqlite-historian = "volttron.historian.sql.historian:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
