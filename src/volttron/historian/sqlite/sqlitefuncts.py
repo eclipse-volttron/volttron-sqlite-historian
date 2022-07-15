@@ -71,7 +71,7 @@ class SqlLiteFuncts(DbDriver):
     :py:class:`volttron.platform.dbutils.basedb.DbDriver`
     """
     def __init__(self, connect_params, table_names):
-        database = connect_params['database']
+        database = connect_params.get('database', "historian.sqlite")
         thread_name = threading.currentThread().getName()
         _log.debug(
             "initializing sqlitefuncts in thread {}".format(thread_name))
@@ -91,6 +91,7 @@ class SqlLiteFuncts(DbDriver):
                     else:
                         db_dir = './data'
                     self.__database = os.path.join(db_dir, self.__database)
+
 
                 os.makedirs(db_dir)
             except OSError as exc:
