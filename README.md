@@ -4,8 +4,7 @@
 [![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://VOLTTRON.github.io/volttron-sqlite-historian/)
 [![pypi version](https://img.shields.io/pypi/v/volttron-sqlite-historian.svg)](https://pypi.org/project/volttron-sqlite-historian/)
 
-
-None
+VOLTTRON historian agent that stores data into a SQLite database
 
 ## Prerequisites
 
