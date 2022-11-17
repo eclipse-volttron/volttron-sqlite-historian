@@ -4,9 +4,5 @@
         "params": {
             "database": "historian_test.sqlite"
         }
-    },
-    "all_platforms":true,
-    "custom_topics": {
-        "capture_record_data": ["heartbeat"]
     }
 }
