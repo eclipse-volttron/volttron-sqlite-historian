@@ -12,7 +12,7 @@ packages = [ { include = "volttron", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-#volttron-lib-sql-historian="^0.1.0"
+#volttron-lib-sql-historian="^0.1.1a1"
 
 [tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
