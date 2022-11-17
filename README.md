@@ -1,6 +1,5 @@
 
 [![ci](https://github.com/VOLTTRON/volttron-sqlite-historian/workflows/ci/badge.svg)](https://github.com/VOLTTRON/volttron-sqlite-historian/actions?query=workflow%3Aci)
-[![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://VOLTTRON.github.io/volttron-sqlite-historian/)
 [![pypi version](https://img.shields.io/pypi/v/volttron-sqlite-historian.svg)](https://pypi.org/project/volttron-sqlite-historian/)
 
 VOLTTRON historian agent that stores data into a SQLite database
@@ -12,14 +11,14 @@ VOLTTRON historian agent that stores data into a SQLite database
 
 ## Installation
 
-Create and activate a virtual environment.
+1. Create and activate a virtual environment.
 
 ```shell
 python -m venv env
 source env/bin/activate
 ```
 
-Installing volttron-listener requires a running volttron instance.
+2. Installing volttron-sqlite-historian requires a running volttron instance.
 
 ```shell
 pip install volttron
@@ -28,13 +27,48 @@ pip install volttron
 volttron -vv -l volttron.log &
 ```
 
-Install and start the volttron-listener.
+3. Create a agent configuration file
+
+SQLite historian supports two parameters
+
+connection - This is a mandatory parameter with type indicating the type of sql historian (i.e. sqlite) and params 
+             containing the path the database file.
+
+tables_def - Optional parameter to provide custom table names for topics, data, and metadata.
+
+Example:
+
+JSON format :
+
+{
+    "connection": {
+        # type should be sqlite
+        "type": "sqlite",
+        "params": {
+            "database": "data/historian.sqlite",
+        }
+    }
+    "tables_def":  {
+        # prefix for data, topics, and (in version < 4.0.0 metadata tables)
+        # default is ""
+        "table_prefix": "",
+        # table name for time series data. default "data"
+        "data_table": "data",
+        # table name for list of topics. default "topics"
+        "topics_table": "topics",
+        # table name mapping topic to metadata. default "meta"
+        # In sqlhistorian version >= 4.0.0 metadata is stored in topics table
+        "meta_table": "meta"
+    }
+}
+
+4. Install and start the volttron-sqlite-historian.
 
 ```shell
-vctl install volttron-listener --start
+vctl install volttron-sqlite-historian --agent-config <path to configuration> --start
 ```
 
-View the status of the installed agent
+5. View the status of the installed agent
 
 ```shell
 vctl status
