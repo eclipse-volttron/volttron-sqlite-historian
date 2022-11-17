@@ -40,27 +40,27 @@ Example:
 
 JSON format :
 
-{
-    "connection": {
-        # type should be sqlite
-        "type": "sqlite",
-        "params": {
-            "database": "data/historian.sqlite",
+    {
+        "connection": {
+            # type should be sqlite
+            "type": "sqlite",
+            "params": {
+                "database": "data/historian.sqlite",
+            }
+        }
+        "tables_def":  {
+            # prefix for data, topics, and (in version < 4.0.0 metadata tables)
+            # default is ""
+            "table_prefix": "",
+            # table name for time series data. default "data"
+            "data_table": "data",
+            # table name for list of topics. default "topics"
+            "topics_table": "topics",
+            # table name mapping topic to metadata. default "meta"
+            # In sqlhistorian version >= 4.0.0 metadata is stored in topics table
+            "meta_table": "meta"
         }
     }
-    "tables_def":  {
-        # prefix for data, topics, and (in version < 4.0.0 metadata tables)
-        # default is ""
-        "table_prefix": "",
-        # table name for time series data. default "data"
-        "data_table": "data",
-        # table name for list of topics. default "topics"
-        "topics_table": "topics",
-        # table name mapping topic to metadata. default "meta"
-        # In sqlhistorian version >= 4.0.0 metadata is stored in topics table
-        "meta_table": "meta"
-    }
-}
 
 4. Install and start the volttron-sqlite-historian.
 
