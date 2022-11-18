@@ -12,7 +12,7 @@ packages = [ { include = "historian", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-#volttron-lib-sql-historian="^0.1.1a0"
+volttron-lib-sql-historian="^0.1.1a1"
 
 [tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
@@ -27,8 +27,8 @@ mypy = "^0.942"
 coverage = "^6.3.2"
 Sphinx = "^4.5.0"
 sphinx-rtd-theme = "^1.0.0"
-volttron-lib-sql-historian = {path = "../volttron-lib-sql-historian", develop = true}
-volttron-lib-base-historian = {path = "../volttron-lib-base-historian", develop = true}
+#volttron-lib-sql-historian = {path = "../volttron-lib-sql-historian", develop = true}
+#volttron-lib-base-historian = {path = "../volttron-lib-base-historian", develop = true}
 #volttron-testing = {path = "../volttron-testing", develop = true}
 #volttron = {path = "../volttron-core", develop = true}
 

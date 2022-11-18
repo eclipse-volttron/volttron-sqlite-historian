@@ -76,55 +76,9 @@ vctl status
 
 ## Development
 
-Developing on this agent requires poetry 1.2.2 or greater be used.  One can install it from https://python-poetry.org/docs/#installation.  The VOLTTRON team prefers to have the python environments created within the project directory.  Execute
-this command to make that behavior the default.
+Please see the following for contributing guidelines [contributing](https://github.com/eclipse-volttron/volttron-core/blob/develop/CONTRIBUTING.md).
 
-```shell
-poetry config virtualenvs.in-project true
-```
-
-Clone the repository.
-
-```shell
-git clone https://github.com/eclipse-volttron/volttron-listener
-```
-
-Change to the repository directory and use poetry install to setup the environment.
-
-```shell
-cd volttron-listener
-poetry install
-```
-
-### Building Wheel
-
-To build a wheel from this project execute the following:
-
-```shell
-poetry build
-```
-
-The wheel and source distribution will be located in the ```./dist/``` directory.
-
-### Bumping version number of project
-
-To bump the version number of the project execute one of the following.
-
-```shell
-# patch, minor, major, prepatch, preminor, premajor, prerelease
-
-# use patch
-user@path$ poetry patch
-
-# output
-Bumping version from 0.2.0-alpha.0 to 0.2.0
-
-# use prepatch
-user@path$ poetry version prepatch
-
-# output
-Bumping version from 0.2.0 to 0.2.1-alpha.0
-```
+Please see the following helpful guide about [developing modular VOLTTRON agents](https://github.com/eclipse-volttron/volttron-core/blob/develop/DEVELOPING_ON_MODULAR.md)
 
 # Disclaimer Notice
 
