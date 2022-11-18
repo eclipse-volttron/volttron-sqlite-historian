@@ -84,3 +84,4 @@ jobs:
         run: |
           poetry install --no-interaction
           poetry run pytest
+          poetry run pytest tests/test_sqlite_historian_integration.py
