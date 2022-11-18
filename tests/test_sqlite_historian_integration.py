@@ -1,6 +1,6 @@
 import gevent
 import pytest
-from volttron.historian.testing.integration_test_interface import HistorianTestInterface
+from historian.testing.integration_test_interface import HistorianTestInterface
 import sqlite3
 from pathlib import Path
 

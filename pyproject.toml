@@ -8,11 +8,11 @@ readme = "README.md"
 repository = "https://github.com/VOLTTRON/volttron-sqlite-historian"
 homepage = "https://github.com/VOLTTRON/volttron-sqlite-historian"
 keywords = []
-packages = [ { include = "volttron", from = "src" } ]
+packages = [ { include = "historian", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-volttron-lib-sql-historian="^0.1.1a0"
+#volttron-lib-sql-historian="^0.1.1a0"
 
 [tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
@@ -27,8 +27,8 @@ mypy = "^0.942"
 coverage = "^6.3.2"
 Sphinx = "^4.5.0"
 sphinx-rtd-theme = "^1.0.0"
-#volttron-lib-sql-historian = {path = "../volttron-lib-sql-historian", develop = true}
-#volttron-lib-base-historian = {path = "../volttron-lib-base-historian", develop = true}
+volttron-lib-sql-historian = {path = "../volttron-lib-sql-historian", develop = true}
+volttron-lib-base-historian = {path = "../volttron-lib-base-historian", develop = true}
 #volttron-testing = {path = "../volttron-testing", develop = true}
 #volttron = {path = "../volttron-core", develop = true}
 
@@ -48,7 +48,7 @@ column_limit = 99
 split_before_logical_operator = true
 
 [tool.poetry.scripts]
-volttron-sqlite-historian = "volttron.historian.sql.historian:main"
+volttron-sqlite-historian = "historian.sql.historian:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

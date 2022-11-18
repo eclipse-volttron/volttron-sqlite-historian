@@ -44,7 +44,7 @@ import pytz
 import threading
 import os
 import re
-from volttron.historian.sql import DbDriver
+from historian.sql import DbDriver
 from collections import defaultdict
 from datetime import datetime
 from math import ceil
