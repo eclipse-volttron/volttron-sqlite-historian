@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 class TestSQLiteIntegration(HistorianTestInterface):
-    @pytest.fixture
+    @pytest.fixture(scope="module")
     def historian(self, volttron_instance):
         sqlite_platform = {
             "connection": {
