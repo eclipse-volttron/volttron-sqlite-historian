@@ -4,6 +4,5 @@
         "params": {
             "database": "historian_test.sqlite"
         }
-    },
-    "all_platforms":true
+    }
 }
