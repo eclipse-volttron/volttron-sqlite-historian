@@ -6,7 +6,7 @@ import os
 
 from setuptools import glob
 
-from volttron.historian.sqlite.sqlitefuncts import SqlLiteFuncts
+from historian.sqlite.sqlitefuncts import SqlLiteFuncts
 
 
 TOPICS_TABLE = "topics"
