@@ -1,5 +1,5 @@
 
-[![ci](https://github.com/VOLTTRON/volttron-sqlite-historian/workflows/ci/badge.svg)](https://github.com/VOLTTRON/volttron-sqlite-historian/actions?query=workflow%3Aci)
+[![Run tests](https://github.com/eclipse-volttron/volttron-sqlite-historian/actions/workflows/run-tests.yml/badge.svg)](https://github.com/eclipse-volttron/volttron-sqlite-historian/actions/workflows/run-tests.yml)
 [![pypi version](https://img.shields.io/pypi/v/volttron-sqlite-historian.svg)](https://pypi.org/project/volttron-sqlite-historian/)
 
 VOLTTRON historian agent that stores data into a SQLite database
