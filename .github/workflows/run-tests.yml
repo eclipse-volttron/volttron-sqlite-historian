@@ -4,7 +4,9 @@ on:
   push:
     paths:
       - '**.py'
-      - 'poetry.yml'
+      - '**.yaml'
+      - '**.yml'
+      - '**.toml'
   pull_request:
     types:
       - opened
@@ -83,5 +85,5 @@ jobs:
       - name: Install library and run tests
         run: |
           poetry install --no-interaction
-          poetry run pytest
-          poetry run pytest tests/test_sqlite_historian_integration.py
+          poetry add --group dev pytest-github-actions-annotate-failure
+          poetry run pytest --cov=src tests/test_sqlite_historian_integration.py
