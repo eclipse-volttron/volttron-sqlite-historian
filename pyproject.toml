@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "volttron-sqlite-historian"
-version = "0.1.0"
+version = "0.2.0-rc"
 description = "None"
 authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
@@ -8,14 +8,13 @@ readme = "README.md"
 repository = "https://github.com/VOLTTRON/volttron-sqlite-historian"
 homepage = "https://github.com/VOLTTRON/volttron-sqlite-historian"
 keywords = []
-packages = [ { include = "volttron", from = "src" } ]
+packages = [ { include = "historian", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-# TODO: uncomment when volttron 0.1.0 is available
-# volttron = "^0.1.0"
+volttron-lib-sql-historian="^0.2.0rc0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
 pytest = "^6.2.5"
 mock = "^4.0.3"
@@ -26,9 +25,14 @@ isort = "^5.10.1"
 safety = "^1.10.3"
 mypy = "^0.942"
 coverage = "^6.3.2"
+pytest-cov = "^3.0.0"
 Sphinx = "^4.5.0"
 sphinx-rtd-theme = "^1.0.0"
-volttron-sql-historian = {path = "../volttron-historian/volttron-sql-historian", develop = true}
+#volttron-lib-sql-historian = {path = "../volttron-lib-sql-historian", develop = true}
+#volttron-lib-base-historian = {path = "../volttron-lib-base-historian", develop = true}
+#volttron-testing = {path = "../volttron-testing", develop = true}
+#volttron = {path = "../volttron-core", develop = true}
+
 
 [tool.yapfignore]
 ignore_patterns = [
@@ -45,7 +49,7 @@ column_limit = 99
 split_before_logical_operator = true
 
 [tool.poetry.scripts]
-volttron-sqlite-historian = "volttron.historian.sql.historian:main"
+volttron-sqlite-historian = "historian.sql.historian:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
