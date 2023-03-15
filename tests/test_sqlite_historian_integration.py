@@ -1,17 +1,42 @@
+# -*- coding: utf-8 -*- {{{
+# ===----------------------------------------------------------------------===
+#
+#                 Installable Component of Eclipse VOLTTRON
+#
+# ===----------------------------------------------------------------------===
+#
+# Copyright 2022 Battelle Memorial Institute
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy
+# of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+# ===----------------------------------------------------------------------===
+# }}}
+
 import gevent
 import pytest
-from volttron.historian.base_test import HistorianTestInterface
+from historian.testing.integration_test_interface import HistorianTestInterface
 import sqlite3
 from pathlib import Path
 
-class SQLiteIntegrationTest(HistorianTestInterface):
-    @pytest.fixture
+
+class TestSQLiteIntegration(HistorianTestInterface):
+    @pytest.fixture(scope="module")
     def historian(self, volttron_instance):
         sqlite_platform = {
             "connection": {
                 "type": "sqlite",
                 "params": {
-                    "database": volttron_instance.volttron_home + 'test.sqlite'
+                    "database": volttron_instance.volttron_home + '/test.sqlite'
                 }
             }
         }
@@ -20,9 +45,10 @@ class SQLiteIntegrationTest(HistorianTestInterface):
             "data_table": "data",
             "topics_table": "topics",
             "meta_table": "meta"}
+
         historian_version = ">=4.0.0"
-        connection, time_precision = self.setup_sqlite(sqlite_platform["connection"]["params"], table_names, historian_version)
-        agent_path = Path(__file__).parents[4]
+        time_precision = self.setup_sqlite(sqlite_platform["connection"]["params"], table_names, historian_version)
+        agent_path = Path(__file__).parents[1]
         historian_uuid = volttron_instance.install_agent(
             vip_identity='platform.historian',
             agent_dir=agent_path,
@@ -34,32 +60,28 @@ class SQLiteIntegrationTest(HistorianTestInterface):
         if volttron_instance.is_running() and volttron_instance.is_agent_running(historian_uuid):
             volttron_instance.stop_agent(historian_uuid)
         volttron_instance.remove_agent(historian_uuid)
-        #cleanup_function = globals()["cleanup_" + connection_type]
-        # import inspect
-        # inspect.getargspec(cleanup_function)[0]
-        # cleanup_function(db_connection, None, drop_tables=True)
         gevent.sleep(1)
 
     def setup_sqlite(self, connection_params, table_names, historian_version):
         print("setup sqlite")
         database_path = connection_params['database']
         print("connecting to sqlite path " + database_path)
-        db_connection = sqlite3.connect(database_path)
+        self.db_connection = sqlite3.connect(database_path)
         print("successfully connected to sqlite")
 
         # clean_db_rows up any rows from older runs if exists
-        cursor = db_connection.cursor()
+        cursor = self.db_connection.cursor()
         for table in table_names.values():
             if table:
                 cursor.execute(f"DROP TABLE IF EXISTS {table}")
-        db_connection.commit()
+        self.db_connection.commit()
 
         if historian_version == "<4.0.0":
             # test for backward compatibility
             # explicitly create tables based on old schema - i.e separate topics and meta table - so that historian
             # does not create tables with new schema on startup
             print("Setting up for version <4.0.0")
-            cursor = db_connection.cursor()
+            cursor = self.db_connection.cursor()
             cursor.execute(
                 '''CREATE TABLE ''' + table_names['topics_table'] +
                 ''' (topic_id INTEGER PRIMARY KEY,
@@ -82,5 +104,35 @@ class SQLiteIntegrationTest(HistorianTestInterface):
                 '''CREATE INDEX IF NOT EXISTS data_idx 
                 ON ''' + table_names['data_table'] + ''' (ts ASC)'''
             )
-        db_connection.commit()
-        return db_connection, 6
+        self.db_connection.commit()
+        return 6
+
+    def cleanup_sql(self, truncate_tables, drop_tables=False):
+        cursor = self.db_connection.cursor()
+        if truncate_tables is None:
+            truncate_tables = self.select_all_sqlite_tables()
+
+        if drop_tables:
+            for table in truncate_tables:
+                if table:
+                    cursor.execute("DROP TABLE IF EXISTS " + table)
+        else:
+            for table in truncate_tables:
+                cursor.execute("DELETE FROM " + table)
+        self.db_connection.commit()
+        cursor.close()
+
+    def select_all_sqlite_tables(self):
+        cursor = self.db_connection.cursor()
+        tables = []
+        try:
+            cursor.execute("SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%';")
+            rows = cursor.fetchall()
+            print(f"table names {rows}")
+            tables = [columns[0] for columns in rows]
+        except Exception as e:
+            print("Error getting list of {}".format(e))
+        finally:
+            if cursor:
+                cursor.close()
+        return tables

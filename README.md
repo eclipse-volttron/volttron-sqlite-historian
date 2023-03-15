@@ -1,117 +1,93 @@
-# VOLTTRON Sqlite Historian
-
-[![ci](https://github.com/VOLTTRON/volttron-sqlite-historian/workflows/ci/badge.svg)](https://github.com/VOLTTRON/volttron-sqlite-historian/actions?query=workflow%3Aci)
-[![documentation](https://img.shields.io/badge/docs-mkdocs%20material-blue.svg?style=flat)](https://VOLTTRON.github.io/volttron-sqlite-historian/)
+[![Run Pytests](https://github.com/eclipse-volttron/volttron-sqlite-historian/actions/workflows/run-test.yml/badge.svg)](https://github.com/eclipse-volttron/volttron-sqlite-historian/actions/workflows/run-test.yml)
 [![pypi version](https://img.shields.io/pypi/v/volttron-sqlite-historian.svg)](https://pypi.org/project/volttron-sqlite-historian/)
 
-
-None
-
-## Prerequisites
-
-* Python 3.8
-* Poetry
-
-### Python
-VOLTTRON Sqlite Historian requires Python 3.8 or above.
+VOLTTRON historian agent that stores data into a SQLite database
 
 
-To install Python 3.8, we recommend using [pyenv](https://github.com/pyenv/pyenv).
+## Requirements
 
-```bash
-# install pyenv
-git clone https://github.com/pyenv/pyenv ~/.pyenv
+ - Python >= 3.8
 
-# setup pyenv (you should also put these three lines in .bashrc or similar)
-export PATH="${HOME}/.pyenv/bin:${PATH}"
-export PYENV_ROOT="${HOME}/.pyenv"
-eval "$(pyenv init -)"
+## Installation
 
-# install Python 3.8
-pyenv install 3.8.10
+1. Create and activate a virtual environment.
 
-# make it available globally
-pyenv global system 3.8.10
-```
+   ```shell
+    python -m venv env
+    source env/bin/activate
+    ```
 
-### Poetry
+2. Installing volttron-sqlite-historian requires a running volttron instance.
 
-This project uses `poetry` to install and manage dependencies. To install poetry,
-follow these [instructions](https://python-poetry.org/docs/master/#installation).
+    ```shell
+    pip install volttron
+    
+    # Start platform with output going to volttron.log
+    volttron -vv -l volttron.log &
+    ```
 
+3. Create a agent configuration file 
+   SQLite historian supports two parameters
+    
+    - connection -  This is a mandatory parameter with type indicating the type of sql historian (i.e. sqlite) and params 
+                    containing the path the database file.
+    
+    - tables_def - Optional parameter to provide custom table names for topics, data, and metadata.
+    
+    The configuration can be in a json or yaml formatted file.
 
+    Yaml Format:
 
-## Installation and Virtual Environment Setup
+    ```yaml
+    connection:
+      # type should be sqlite
+      type: sqlite
+      params:
+        # Relative to the agents data directory
+        database: "data/historian.sqlite"
+    
+      tables_def:
+        # prefix for data, topics, and (in version < 4.0.0 metadata tables)
+        # default is ""
+        table_prefix: ""
+        # table name for time series data. default "data"
+        data_table: data
+        # table name for list of topics. default "topics"
+        topics_table: topics
+    ```
+    
+4. Install and start the volttron-sqlite-historian.
 
-If you want to install all your dependencies, including dependencies to help with developing your agent, run this command:
+    ```shell
+    vctl install volttron-sqlite-historian --agent-config <path to configuration> --start
+    ```
 
-```poetry install```
+5. View the status of the installed agent
 
-If you want to install only the dependencies needed to run your agent, run this command:
+    ```shell
+    vctl status
+    ```
 
-```poetry install --no-dev```
+## Development
 
-Set the environment to be in your project directory:
+Please see the following for contributing guidelines [contributing](https://github.com/eclipse-volttron/volttron-core/blob/develop/CONTRIBUTING.md).
 
-```poetry config virtualenvs.in-project true```
+Please see the following helpful guide about [developing modular VOLTTRON agents](https://github.com/eclipse-volttron/volttron-core/blob/develop/DEVELOPING_ON_MODULAR.md)
 
-Activate the virtual environment:
+# Disclaimer Notice
 
-```poetry shell```
+This material was prepared as an account of work sponsored by an agency of the
+United States Government.  Neither the United States Government nor the United
+States Department of Energy, nor Battelle, nor any of their employees, nor any
+jurisdiction or organization that has cooperated in the development of these
+materials, makes any warranty, express or implied, or assumes any legal
+liability or responsibility for the accuracy, completeness, or usefulness or any
+information, apparatus, product, software, or process disclosed, or represents
+that its use would not infringe privately owned rights.
 
-
-## Git Setup
-
-1. To use git to manage version control, create a new git repository in your local agent project.
-
-```
-git init
-```
-
-2. Then create a new repo in your Github or Gitlab account. Copy the URL that points to that new repo in
-your Github or Gitlab account. This will be known as our 'remote'.
-
-3. Add the remote (i.e. the new repo URL from your Github or Gitlab account) to your local repository. Run the following command:
-
-```git remote add origin <my github/gitlab URL>```
-
-When you push to your repo, note that the default branch is called 'main'.
-
-
-## Optional Configurations
-
-## Precommit
-
-Install pre-commit hooks:
-
-```pre-commit install```
-
-To run pre-commit on all your files, run this command:
-
-```pre-commit run --all-files```
-
-If you have precommit installed and you want to ignore running the commit hooks
-every time you run a commit, include the `--no-verify` flag in your commit. The following
-is an example:
-
-```git commit -m "Some message" --no-verify```
-
-# Documentation
-
-To build the docs, navigate to the 'docs' directory and build the documentation:
-
-```shell
-cd docs
-make html
-```
-
-After the documentation is built, view the documentation in html form in your browser.
-The html files will be located in `~<path to agent project directory>/docs/build/html`.
-
-**PROTIP: To open the landing page of your documentation directly from the command line, run the following command:**
-
-```shell
-open <path to agent project directory>/docs/build/html/index.html
-```
-
-This will open the documentation landing page in your default browsert (e.g. Chrome, Firefox).
+Reference herein to any specific commercial product, process, or service by
+trade name, trademark, manufacturer, or otherwise does not necessarily
+constitute or imply its endorsement, recommendation, or favoring by the United
+States Government or any agency thereof, or Battelle Memorial Institute. The
+views and opinions of authors expressed herein do not necessarily state or
+reflect those of the United States Government or any agency thereof.
