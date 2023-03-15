@@ -1,22 +1,27 @@
-Welcome to VOLTTRON Sqlite Historian's documentation!
-===================================
+SQLite Historian
+================
 
-**VOLTTRON Sqlite Historian** is ...
+This is a VOLTTRON historian agent that stores its data in a sqlite database. It depends on
+`volttron-lib-sql-historian <https://pypi.org/project/volttron-lib-sql-historian/>`_ and extends the class
+`SQLHistorian <https://github.com/eclipse-volttron/volttron-lib-sql-historian/blob/main/src/historian/sql/historian.py>`_
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Configuration
+-------------
 
-.. note::
+The following is a minimal configuration file that uses a relative path to the database.
 
-   This project is under active development.
+::
 
-Contents
---------
+ {
+    "connection": {
+        "type": "sqlite",
+        "params": {
+            "database": "data/historian.sqlite"
+        }
+    }
+}
 
-.. toctree::
+All the above parameters are mandatory.
 
-   usage
-   agent
-   quick-start
-   fail-url-test-on-purpose
+TODO- update SQLHistorian rst, link to that
 
