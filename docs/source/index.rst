@@ -26,9 +26,9 @@ All the above parameters are mandatory.
 Optional Configuration
 ----------------------
 
-In addition to the above configuration, SQLite Historian can be configured using all the available configurations
-exposed by the SQLHistorian and BaseHistorian. Please refer to
-:ref:`SQL Historian Configurations <SQL-Historian-Configurations>` and
-:ref:`Base Historian Configurations <Base-Historian-Configurations>`
+In addition to the above configuration, SQLite Historian can optionally be configured using all the available
+configurations exposed by the SQLHistorian and BaseHistorian. Please refer to
+:ref:`SQL Historian <SQLHistorian-Library>` and :ref:`Base Historian Configurations <Base-Historian-Configurations>`
+for more details
 
 
