@@ -1,12 +1,16 @@
+[![Eclipse VOLTTRON™](https://img.shields.io/badge/Eclips%20VOLTTRON--red.svg)](https://volttron.readthedocs.io/en/latest/)
+![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
+![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)
 [![Run Pytests](https://github.com/eclipse-volttron/volttron-sqlite-historian/actions/workflows/run-test.yml/badge.svg)](https://github.com/eclipse-volttron/volttron-sqlite-historian/actions/workflows/run-test.yml)
 [![pypi version](https://img.shields.io/pypi/v/volttron-sqlite-historian.svg)](https://pypi.org/project/volttron-sqlite-historian/)
+![Passing?](https://github.com/VOLTTRON/volttron-sqlite-historian/actions/workflows/run-tests.yml/badge.svg)
 
 VOLTTRON historian agent that stores data into a SQLite database
 
 
 ## Requirements
 
- - Python >= 3.8
+ - Python >= 3.10
 
 ## Installation
 
