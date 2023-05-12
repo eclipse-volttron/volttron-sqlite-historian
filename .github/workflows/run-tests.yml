@@ -14,6 +14,9 @@ on:
       - reopened
     paths:
       - '**.py'
+      - '**.yaml'
+      - '**.yml'
+      - '**.toml'
 
 defaults:
   run:
@@ -23,15 +26,15 @@ env:
   LANG: en_US.utf-8
   LC_ALL: en_US.utf-8
   PYTHON_VERSION: '3.10'
-  PROJECT_NAME: volttron-lib-base-historian
+  PROJECT_NAME: volttron-sqlite-historian
 
 jobs:
 
   run-tests:
     strategy:
       matrix:
-        os: ["ubuntu-20.04", "ubuntu-22.04"]
-        python: ["3.8", "3.9", "3.10"]
+        os: [ "ubuntu-22.04" ]
+        python: [ "3.10", "3.11" ]
 
     runs-on: ${{ matrix.os }}
 
@@ -58,26 +61,18 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.2.2
           virtualenvs-create: true
           virtualenvs-in-project: true
           installer-parallel: true
 
-#      #----------------------------------------------
-#      #       load cached venv if cache exists
-#      #----------------------------------------------
-#      - name: Load cached venv
-#        id: cached-poetry-dependencies
-#        uses: actions/cache@v2.1.7
-#        with:
-#          path: .venv
-#          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-#      #----------------------------------------------
-#      # install dependencies if cache does not exist
-#      #----------------------------------------------
-#      - name: Install dependencies
-#        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-#        run: poetry install --no-interaction --no-root
+        #----------------------------------------------
+        # install your root project, and run tests.
+        #----------------------------------------------
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v2
+        with:
+          files: tests
 
       #----------------------------------------------
       # install your root project, and run tests.
@@ -85,5 +80,5 @@ jobs:
       - name: Install library and run tests
         run: |
           poetry install --no-interaction
-          poetry add --group dev pytest-github-actions-annotate-failure
+          poetry add --group dev pytest-github-actions-annotate-failures
           poetry run pytest --cov=src tests/test_sqlite_historian_integration.py

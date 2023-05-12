@@ -1,7 +1,11 @@
+[build-system]
+requires = ["poetry-core>=1.2.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 name = "volttron-sqlite-historian"
-version = "0.2.0-rc"
-description = "None"
+version = "0.2.0rc"
+description = "VOLTTRON historian that store data in sqlite3 database"
 authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
 readme = "README.md"
@@ -11,8 +15,8 @@ keywords = []
 packages = [ { include = "historian", from = "src" } ]
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
-volttron-lib-sql-historian="^0.2.0rc0"
+python = ">=3.10,<4.0"
+volttron-lib-sql-historian="^0.1.1a8"
 
 [tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
@@ -26,13 +30,19 @@ safety = "^1.10.3"
 mypy = "^0.942"
 coverage = "^6.3.2"
 pytest-cov = "^3.0.0"
-Sphinx = "^4.5.0"
-sphinx-rtd-theme = "^1.0.0"
+Sphinx = "^6.0.0"
+sphinx-rtd-theme = "^1.2.0"
+volttron-testing = "^0.4.0rc3"
 #volttron-lib-sql-historian = {path = "../volttron-lib-sql-historian", develop = true}
 #volttron-lib-base-historian = {path = "../volttron-lib-base-historian", develop = true}
 #volttron-testing = {path = "../volttron-testing", develop = true}
 #volttron = {path = "../volttron-core", develop = true}
 
+[tool.yapf]
+based_on_style = "pep8"
+spaces_before_comment = 4
+column_limit = 99
+split_before_logical_operator = true
 
 [tool.yapfignore]
 ignore_patterns = [
@@ -42,21 +52,5 @@ ignore_patterns = [
     "docs/**"
 ]
 
-[tool.yapf]
-based_on_style = "pep8"
-spaces_before_comment = 4
-column_limit = 99
-split_before_logical_operator = true
-
 [tool.poetry.scripts]
 volttron-sqlite-historian = "historian.sql.historian:main"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
-# tasks
-git-changelog = ">=0.5.0"
-httpx = ">=0.16.1"
-jinja2-cli = ">=0.7.0"
-toml = ">=0.10.2"
