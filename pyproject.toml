@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "volttron-sqlite-historian"
-version = "2.0.0rc0"
+version = "1.0.0"
 description = "VOLTTRON historian that store data in sqlite3 database"
 authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
@@ -16,7 +16,7 @@ packages = [ { include = "historian", from = "src" } ]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-volttron-lib-sql-historian=">=2.0.0rc0"
+volttron-lib-sql-historian="^0.1.1a8"
 
 [tool.poetry.group.dev.dependencies]
 # formatting, quality, tests
@@ -32,8 +32,9 @@ coverage = "^6.3.2"
 pytest-cov = "^3.0.0"
 Sphinx = "^6.0.0"
 sphinx-rtd-theme = "^1.2.0"
-#volttron-testing = "^0.4.0rc3"
+volttron-testing = "^0.4.0rc3"
 #volttron-testing = {path = "../volttron-testing", develop = true}
+volttron-lib-sql-historian = ">=1.0.0"
 
 [tool.yapf]
 based_on_style = "pep8"
