@@ -36,9 +36,9 @@ from datetime import datetime
 from math import ceil
 
 from volttron.utils import (
-    fix_sqlite3_datetime, jsonapi, format_timestamp
+    fix_sqlite3_datetime, jsonapi, setup_logging, format_timestamp
 )
-from volttron.client.logs import setup_logging
+
 from volttron.utils import ClientContext as cc
 
 setup_logging()
