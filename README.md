@@ -7,30 +7,15 @@
 
 VOLTTRON historian agent that stores data into a SQLite database
 
+## Pre-requisite
 
-## Requirements
-
- - Python >= 3.10
+Before installing this agent, VOLTTRON (>=11.0.0rc0) should be installed and running.  Its virtual environment should be active.
+Information on how to install of the VOLTTRON platform can be found
+[here](https://github.com/eclipse-volttron/volttron-core).
 
 ## Installation
 
-1. Create and activate a virtual environment.
-
-   ```shell
-    python -m venv env
-    source env/bin/activate
-    ```
-
-2. Installing volttron-sqlite-historian requires a running volttron instance.
-
-    ```shell
-    pip install volttron
-    
-    # Start platform with output going to volttron.log
-    volttron -vv -l volttron.log &
-    ```
-
-3. Create a agent configuration file 
+1. Create a agent configuration file 
    SQLite historian supports two parameters
     
     - connection -  This is a mandatory parameter with type indicating the type of sql historian (i.e. sqlite) and params 
@@ -60,13 +45,13 @@ VOLTTRON historian agent that stores data into a SQLite database
         topics_table: topics
     ```
     
-4. Install and start the volttron-sqlite-historian.
+1. Install and start the volttron-sqlite-historian.
 
     ```shell
     vctl install volttron-sqlite-historian --agent-config <path to configuration> --start
     ```
 
-5. View the status of the installed agent
+1. View the status of the installed agent
 
     ```shell
     vctl status
