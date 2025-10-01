@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "volttron-sqlite-historian"
-version = "2.0.0rc0"
+version = "2.0.0rc1"
 description = "VOLTTRON historian that store data in sqlite3 database"
 authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
 license = "Apache License 2.0"
