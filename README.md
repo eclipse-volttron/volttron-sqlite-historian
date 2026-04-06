@@ -21,11 +21,10 @@ VOLTTRON historian agent that stores data into a SQLite database
     source env/bin/activate
     ```
 
-2. Installing volttron-sqlite-historian requires a running volttron instance.
+2. Installing volttron-sqlite-historian requires a running VOLTTRON instance. Install the platform by following the
+    `volttron-core` README, then start it if it is not already running.
 
     ```shell
-    pip install volttron
-    
     # Start platform with output going to volttron.log
     volttron -vv -l volttron.log &
     ```
