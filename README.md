@@ -7,40 +7,26 @@
 
 VOLTTRON historian agent that stores data into a SQLite database
 
+## Pre-requisite
 
-## Requirements
-
- - Python >= 3.10
+Before installing this agent, VOLTTRON (>=11.0.0rc0) should be installed and running.  Its virtual environment should be active.
+Information on how to install of the VOLTTRON platform can be found
+[here](https://github.com/eclipse-volttron/volttron-core/tree/v10)
 
 ## Installation
 
-1. Create and activate a virtual environment.
-
-   ```shell
-    python -m venv env
-    source env/bin/activate
-    ```
-
-2. Installing volttron-sqlite-historian requires a running volttron instance.
-
-    ```shell
-    pip install volttron
-    
-    # Start platform with output going to volttron.log
-    volttron -vv -l volttron.log &
-    ```
-
-3. Create a agent configuration file 
+1. Create a agent configuration file 
    SQLite historian supports two parameters
     
     - connection -  This is a mandatory parameter with type indicating the type of sql historian (i.e. sqlite) and params 
                     containing the path the database file.
     
     - tables_def - Optional parameter to provide custom table names for topics, data, and metadata.
+    - You can also override any parameter defined by base historian. See configuration of [base historian class](https://eclipse-volttron.readthedocs.io/en/latest/external-docs/volttron-lib-base-historian/index.html#configuration)
     
     The configuration can be in a json or yaml formatted file.
 
-    Yaml Format:
+    Example Yaml Format:
 
     ```yaml
     connection:
@@ -59,14 +45,43 @@ VOLTTRON historian agent that stores data into a SQLite database
         # table name for list of topics. default "topics"
         topics_table: topics
     ```
+
+   Example JSON format:
+   ```json
+   {
+     "connection":{
+     "type": "sqlite",
+     "params":{
+      "database": "/home/chandrika/sqlite-historian4.sqlite"
+     }
+     },
+       "tables_def":
+       {
+        "table_prefix": "p1",
+        "data_table": "new_data",
+        "topics_table": "new_topics"
+       },
+     "custom_topics": {
+            "capture_record_data": ["heartbeat"]
+      }
+   }
+   ```
     
-4. Install and start the volttron-sqlite-historian.
+1. Install and start the volttron-sqlite-historian.
+   
+   - You can either pass the configuration file directly using --agent-config 
 
     ```shell
     vctl install volttron-sqlite-historian --agent-config <path to configuration> --start
     ```
 
-5. View the status of the installed agent
+    - OR  not pass the config at install time, and  use the configuration store for historian's configuration using the command
+
+    ```shell
+    vctl config store <vip-identity> config <path to json config file>
+    ```
+
+1. View the status of the installed agent
 
     ```shell
     vctl status
