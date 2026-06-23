@@ -38,11 +38,9 @@ from math import ceil
 from volttron.utils import (
     fix_sqlite3_datetime, jsonapi, format_timestamp
 )
-from volttron.client.logs import setup_logging
 
 from volttron.utils import ClientContext as cc
 
-setup_logging()
 _log = logging.getLogger(__name__)
 
 # Make sure sqlite3 datetime adapters are updated.
