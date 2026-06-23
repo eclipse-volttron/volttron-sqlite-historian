@@ -78,6 +78,7 @@ Information on how to install of the VOLTTRON platform can be found
     - OR  not pass the config at install time, and  use the configuration store for historian's configuration using the command
 
     ```shell
+    vctl install volttron-sqlite-historian --vip-identity <unique id> --start
     vctl config store <vip-identity> config <path to json config file>
     ```
 
