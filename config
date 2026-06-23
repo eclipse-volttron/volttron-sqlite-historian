@@ -4,5 +4,15 @@
         "params": {
             "database": "historian_test.sqlite"
         }
-    }
+    },
+    # Optional table name configuration
+    #"tables_def":{
+    #    "table_prefix": "p1",
+    #    "data_table": "new_data",
+    #    "topics_table": "new_topics"
+    #},
+    # other optional parameters inherited from base historian
+    #"custom_topics": {
+    #    "capture_record_data": ["heartbeat"]
+    #}
 }
