@@ -31,6 +31,7 @@ import os
 import re
 from historian.sql import DbDriver
 from collections import defaultdict
+import time
 from datetime import datetime, timezone
 from math import ceil
 
@@ -244,7 +245,7 @@ class SqlLiteFuncts(DbDriver):
         _log.debug("args: " + str(args))
 
         values = defaultdict(list)
-        start_t = datetime.utcnow()
+        start_t = time.perf_counter()
         for topic_id in topic_ids:
             args[0] = topic_id
             values[id_name_map[topic_id]] = []
@@ -259,7 +260,7 @@ class SqlLiteFuncts(DbDriver):
                         values[id_name_map[topic_id]].append((format_timestamp(ts), jsonapi.loads(value)))
                     cursor.close()
 
-        _log.debug("Time taken to load results from db:{}".format(datetime.utcnow()-start_t))
+        _log.debug(f"Time taken to load results from db: {time.perf_counter() - start_t:.3f}s")
         return values
 
     def manage_db_size(self, history_limit_timestamp, storage_limit_gb):
