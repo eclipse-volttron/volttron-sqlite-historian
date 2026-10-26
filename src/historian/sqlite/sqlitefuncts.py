@@ -26,13 +26,13 @@ import ast
 import errno
 import logging
 import sqlite3
-import pytz
 import threading
 import os
 import re
 from historian.sql import DbDriver
 from collections import defaultdict
-from datetime import datetime
+import time
+from datetime import datetime, timezone
 from math import ceil
 
 from volttron.utils import (
@@ -203,9 +203,9 @@ class SqlLiteFuncts(DbDriver):
         # base historian converts naive timestamps to UTC, but if the start and end had explicit timezone info then they
         # need to get converted to UTC since sqlite3 only store naive timestamp
         if start:
-            start = start.astimezone(pytz.UTC)
+            start = start.astimezone(timezone.utc)
         if end:
-            end = end.astimezone(pytz.UTC)
+            end = end.astimezone(timezone.utc)
 
         if start and end and start == end:
             where_clauses.append("ts = ?")
@@ -245,7 +245,7 @@ class SqlLiteFuncts(DbDriver):
         _log.debug("args: " + str(args))
 
         values = defaultdict(list)
-        start_t = datetime.utcnow()
+        start_t = time.perf_counter()
         for topic_id in topic_ids:
             args[0] = topic_id
             values[id_name_map[topic_id]] = []
@@ -260,7 +260,7 @@ class SqlLiteFuncts(DbDriver):
                         values[id_name_map[topic_id]].append((format_timestamp(ts), jsonapi.loads(value)))
                     cursor.close()
 
-        _log.debug("Time taken to load results from db:{}".format(datetime.utcnow()-start_t))
+        _log.debug(f"Time taken to load results from db: {time.perf_counter() - start_t:.3f}s")
         return values
 
     def manage_db_size(self, history_limit_timestamp, storage_limit_gb):
@@ -515,9 +515,9 @@ class SqlLiteFuncts(DbDriver):
         # base historian converts naive timestamps to UTC, but if the start and end had explicit timezone info then they
         # need to get converted to UTC since sqlite3 only store naive timestamp
         if start:
-            start = start.astimezone(pytz.UTC)
+            start = start.astimezone(timezone.utc)
         if end:
-            end = end.astimezone(pytz.UTC)
+            end = end.astimezone(timezone.utc)
 
         if start and end and start == end:
             where_clauses.append("ts = ?")
